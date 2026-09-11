@@ -30,9 +30,7 @@ async def main():
 
             await session.initialize()
 
-            # -------------------------------------------------
-            # 1. Get tools from MCP server
-            # -------------------------------------------------
+            # Get tools from MCP server
 
             tools_result = await session.list_tools()
 
@@ -52,9 +50,7 @@ async def main():
                 }
             ]
 
-            # -------------------------------------------------
-            # 2. User question
-            # -------------------------------------------------
+            # User question
 
             user_question = (
                 "Why hasn't the DPDP policy been assigned "
@@ -64,9 +60,7 @@ async def main():
             print("\nUser:")
             print(user_question)
 
-            # -------------------------------------------------
-            # 3. Start conversation
-            # -------------------------------------------------
+            # Start conversation
 
             contents = [
                 {
@@ -79,9 +73,7 @@ async def main():
                 }
             ]
 
-            # -------------------------------------------------
-            # 4. Agent loop
-            # -------------------------------------------------
+            # Agent loop
 
             for step in range(5):
 
@@ -111,9 +103,7 @@ async def main():
 
                 tool_calls_found = False
 
-                # -------------------------------------------------
-                # 5. Process Gemini tool calls
-                # -------------------------------------------------
+                # Process Gemini tool calls
 
                 for part in candidate.content.parts:
 
@@ -136,9 +126,7 @@ async def main():
                         f"Arguments: {arguments}"
                     )
 
-                    # -------------------------------------------------
-                    # 6. Execute MCP tool
-                    # -------------------------------------------------
+                    # Execute MCP tool
 
                     result = await session.call_tool(
                         tool_name,
@@ -159,9 +147,7 @@ async def main():
                     print("\nTool result:")
                     print(tool_output)
 
-                    # -------------------------------------------------
-                    # 7. Send tool result back to Gemini
-                    # -------------------------------------------------
+                    # Send tool result back to Gemini
 
                     contents.append(
                         {
@@ -179,10 +165,7 @@ async def main():
                         }
                     )
 
-                # -------------------------------------------------
-                # 8. If no tool was requested,
-                #    Gemini has produced the final answer
-                # -------------------------------------------------
+                # If no tool was requested, Gemini has produced the final answer
 
                 if not tool_calls_found:
 
